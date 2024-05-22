@@ -57,8 +57,6 @@ def model_function(trial):
     model.add(tf.keras.layers.Dense(units=num_classes, activation='softmax'))
 
 
-
-    # Compile the model
     model.compile(
         loss='sparse_categorical_crossentropy',
         optimizer=tf.keras.optimizers.Adam(),
@@ -66,10 +64,8 @@ def model_function(trial):
     )
 
 
-    # Train the model
     model.fit(X_train, y_train, epochs=10, batch_size=32, validation_split=0.2, verbose=0)
 
-    # Evaluate the model
     loss, accuracy = model.evaluate(X_test, y_test, verbose=0)
 
     return accuracy
@@ -96,22 +92,19 @@ def other_params_model(trial):
         tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
         tf.keras.layers.Conv2D(filters=num_filters * 2, kernel_size=(3, 3), activation='relu'),
         tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-        tf.keras.layers.Flatten(),  # Flatten the data for dense layers
+        tf.keras.layers.Flatten(), 
         tf.keras.layers.Dense(units=dense_units, activation='relu'),
-        tf.keras.layers.Dense(units=num_classes, activation='softmax')  # Output layer with softmax for probabilities
+        tf.keras.layers.Dense(units=num_classes, activation='softmax') 
     ])
 
-    # Compile the model
     model.compile(
         loss='sparse_categorical_crossentropy',
         optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
         metrics=['accuracy']
     )
 
-    # Train the model
     model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, validation_split=0.2, verbose=0)
 
-    # Evaluate the model
     loss, accuracy = model.evaluate(X_test, y_test, verbose=0)
 
     return accuracy
